@@ -1,0 +1,85 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+const API = 'http://127.0.0.1:8000';
+
+function Dashboard({ user, onLogout }) {
+  const [surveys, setSurveys] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${API}/surveys/`).then(res => setSurveys(res.data));
+  }, []);
+
+  return (
+    <div style={styles.container}>
+      <div style={styles.header}>
+        <h1 style={styles.title}>PulseHR</h1>
+        <div style={styles.headerRight}>
+          <span style={styles.phone}>{user.phone}</span>
+          <button style={styles.logout} onClick={onLogout}>Выйти</button>
+        </div>
+      </div>
+
+      <div style={styles.content}>
+        <h2 style={styles.sectionTitle}>Доступные опросы</h2>
+        {surveys.length === 0 ? (
+          <p style={styles.empty}>Опросов пока нет</p>
+        ) : (
+          surveys.map(survey => (
+            <div key={survey.id} style={styles.card}>
+              <h3 style={styles.surveyTitle}>{survey.title}</h3>
+              <p style={styles.surveyDesc}>{survey.description}</p>
+              <div style={styles.cardFooter}>
+                <span style={{
+                  ...styles.badge,
+                  background: survey.status === 'active' ? '#dcfce7' : '#f3f4f6',
+                  color: survey.status === 'active' ? '#16a34a' : '#6b7280',
+                }}>
+                  {survey.status === 'active' ? 'Активный' : 'Черновик'}
+                </span>
+                <span style={styles.questions}>
+                  {survey.questions.length} вопросов
+                </span>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+const styles = {
+  container: { minHeight: '100vh', backgroundColor: '#f5f5f5' },
+  header: {
+    background: 'white',
+    padding: '16px 32px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+  },
+  title: { fontSize: '22px', color: '#4F46E5', margin: 0 },
+  headerRight: { display: 'flex', alignItems: 'center', gap: '16px' },
+  phone: { color: '#555', fontSize: '14px' },
+  logout: {
+    background: 'none', border: '1px solid #ddd',
+    padding: '6px 14px', borderRadius: '6px',
+    cursor: 'pointer', color: '#555',
+  },
+  content: { maxWidth: '720px', margin: '32px auto', padding: '0 16px' },
+  sectionTitle: { fontSize: '20px', color: '#333', marginBottom: '16px' },
+  empty: { color: '#888', textAlign: 'center', padding: '40px' },
+  card: {
+    background: 'white', borderRadius: '10px',
+    padding: '20px', marginBottom: '16px',
+    boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+  },
+  surveyTitle: { fontSize: '17px', color: '#333', margin: '0 0 6px' },
+  surveyDesc: { color: '#666', fontSize: '14px', margin: '0 0 14px' },
+  cardFooter: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+  badge: { padding: '4px 10px', borderRadius: '20px', fontSize: '13px' },
+  questions: { color: '#888', fontSize: '13px' },
+};
+
+export default Dashboard;
