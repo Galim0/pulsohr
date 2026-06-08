@@ -4,7 +4,7 @@ from app.core.database import engine, Base
 from app.models.user import User
 from app.models.survey import Survey, Question
 from app.models.response import Response, Answer
-from app.api import auth, surveys, responses
+from app.api import auth, surveys, responses, analytics
 
 Base.metadata.create_all(bind=engine)
 
@@ -21,6 +21,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(surveys.router)
 app.include_router(responses.router)
+app.include_router(analytics.router)
 
 @app.get("/")
 def root():

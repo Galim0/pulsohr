@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Survey from './Survey';
 import CreateSurvey from './CreateSurvey';
+import Analytics from './Analytics';
 
 const API = 'http://127.0.0.1:8000';
 
@@ -9,10 +10,18 @@ function Dashboard({ user, onLogout }) {
   const [surveys, setSurveys] = useState([]);
   const [activeSurvey, setActiveSurvey] = useState(null);
   const [creating, setCreating] = useState(false);
+  const [activeAnalytics, setActiveAnalytics] = useState(null);
 
   useEffect(() => {
     axios.get(`${API}/surveys/`).then(res => setSurveys(res.data));
   }, []);
+
+  if (activeAnalytics) return (
+    <Analytics
+      surveyId={activeAnalytics}
+      onBack={() => setActiveAnalytics(null)}
+    />
+  );
 
   if (creating) return (
     <CreateSurvey onBack={() => setCreating(false)} />
@@ -59,12 +68,20 @@ function Dashboard({ user, onLogout }) {
                 }}>
                   {survey.status === 'active' ? 'Активный' : 'Черновик'}
                 </span>
-                <button
-                  style={styles.startBtn}
-                  onClick={() => setActiveSurvey(survey.id)}
-                >
-                  Пройти →
-                </button>
+                <div style={{display: 'flex', gap: '8px'}}>
+                  <button
+                    style={styles.startBtn}
+                    onClick={() => setActiveSurvey(survey.id)}
+                  >
+                    Пройти →
+                  </button>
+                  <button
+                    style={styles.analyticsBtn}
+                    onClick={() => setActiveAnalytics(survey.id)}
+                  >
+                    📊
+                  </button>
+                </div>
               </div>
             </div>
           ))
@@ -92,6 +109,7 @@ const styles = {
   badge: { padding: '4px 10px', borderRadius: '20px', fontSize: '13px' },
   startBtn: { background: '#4F46E5', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px' },
   createBtn: { background: '#4F46E5', color: 'white', border: 'none', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px' },
+  analyticsBtn: { background: 'white', color: '#4F46E5', border: '1px solid #4F46E5', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', fontSize: '16px' },
 };
 
 export default Dashboard;
