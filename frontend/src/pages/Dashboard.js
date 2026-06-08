@@ -12,9 +12,18 @@ function Dashboard({ user, onLogout }) {
   const [creating, setCreating] = useState(false);
   const [activeAnalytics, setActiveAnalytics] = useState(null);
 
-  useEffect(() => {
+  const loadSurveys = () => {
     axios.get(`${API}/surveys/`).then(res => setSurveys(res.data));
+  };
+
+  useEffect(() => {
+    loadSurveys();
   }, []);
+
+  const publishSurvey = async (surveyId) => {
+    await axios.patch(`${API}/surveys/${surveyId}/publish`);
+    loadSurveys();
+  };
 
   if (activeAnalytics) return (
     <Analytics
@@ -24,7 +33,7 @@ function Dashboard({ user, onLogout }) {
   );
 
   if (creating) return (
-    <CreateSurvey onBack={() => setCreating(false)} />
+    <CreateSurvey onBack={() => { setCreating(false); loadSurveys(); }} />
   );
 
   if (activeSurvey) return (
@@ -69,6 +78,14 @@ function Dashboard({ user, onLogout }) {
                   {survey.status === 'active' ? 'Активный' : 'Черновик'}
                 </span>
                 <div style={{display: 'flex', gap: '8px'}}>
+                  {survey.status === 'draft' && (
+                    <button
+                      style={styles.publishBtn}
+                      onClick={() => publishSurvey(survey.id)}
+                    >
+                      Опубликовать
+                    </button>
+                  )}
                   <button
                     style={styles.startBtn}
                     onClick={() => setActiveSurvey(survey.id)}
@@ -107,6 +124,7 @@ const styles = {
   surveyDesc: { color: '#666', fontSize: '14px', margin: '0 0 14px' },
   cardFooter: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
   badge: { padding: '4px 10px', borderRadius: '20px', fontSize: '13px' },
+  publishBtn: { background: '#16a34a', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px' },
   startBtn: { background: '#4F46E5', color: 'white', border: 'none', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px' },
   createBtn: { background: '#4F46E5', color: 'white', border: 'none', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px' },
   analyticsBtn: { background: 'white', color: '#4F46E5', border: '1px solid #4F46E5', padding: '8px 12px', borderRadius: '8px', cursor: 'pointer', fontSize: '16px' },
