@@ -52,4 +52,13 @@ def publish_survey(survey_id: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Опрос не найден")
     survey.status = "active"
     db.commit()
+
+    from app.api.push import send_push_to_all
+    send_push_to_all(
+        db=db,
+        title=f"Новый опрос: {survey.title}",
+        body="Пройдите опрос — это займёт пару минут!",
+        survey_id=survey_id
+    )
+
     return {"message": "Опрос опубликован"}
