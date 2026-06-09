@@ -157,7 +157,8 @@ const styles = {
   },
   hint: {
     color: '#555',
-    marginBottom: '20px',
+    marginBottom:
+    '20px',
     fontSize: '14px',
     background: '#fff5f5',
     padding: '10px',

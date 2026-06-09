@@ -74,7 +74,8 @@ function Survey({ surveyId, user, onBack }) {
                     key={val}
                     style={{
                       ...styles.scaleBtn,
-                      background: answers[q.id] === val ? '#4F46E5' : 'white',
+                      background: answers[q.id] === val ? '#E30613' : 'white',
+                      border: answers[q.id] === val ? '1px solid #E30613' : '1px solid #ddd',
                       color: answers[q.id] === val ? 'white' : '#333',
                     }}
                     onClick={() => handleAnswer(q.id, val)}
@@ -137,18 +138,18 @@ const styles = {
   inner: { maxWidth: '680px', margin: '0 auto' },
   card: { background: 'white', borderRadius: '12px', padding: '40px', textAlign: 'center', maxWidth: '400px', margin: '80px auto' },
   loading: { textAlign: 'center', padding: '40px', color: '#888' },
-  back: { background: 'none', border: 'none', color: '#4F46E5', cursor: 'pointer', fontSize: '15px', marginBottom: '16px', padding: 0 },
+  back: { background: 'none', border: 'none', color: '#E30613', cursor: 'pointer', fontSize: '15px', marginBottom: '16px', padding: 0 },
   title: { fontSize: '24px', color: '#333', marginBottom: '8px' },
   subtitle: { color: '#666', marginBottom: '16px' },
   anonBadge: { background: '#f0fdf4', color: '#16a34a', padding: '8px 14px', borderRadius: '8px', fontSize: '14px', marginBottom: '24px', display: 'inline-block' },
-  questionCard: { background: 'white', borderRadius: '10px', padding: '20px', marginBottom: '16px' },
+  questionCard: { background: 'white', borderRadius: '12px', padding: '20px', marginBottom: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)', borderLeft: '5px solid #E30613' },
   questionText: { fontSize: '16px', color: '#333', marginBottom: '14px', fontWeight: '500' },
   textarea: { width: '100%', padding: '10px', fontSize: '15px', border: '1px solid #ddd', borderRadius: '8px', minHeight: '100px', boxSizing: 'border-box', resize: 'vertical' },
-  scaleRow: { display: 'flex', gap: '10px' },
+  scaleRow: { display: 'flex', gap: '10px', flexWrap: 'wrap' },
   scaleBtn: { width: '48px', height: '48px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '16px', cursor: 'pointer' },
   optionLabel: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', cursor: 'pointer' },
   optionText: { fontSize: '15px', color: '#333' },
-  button: { width: '100%', padding: '14px', fontSize: '16px', background: '#4F46E5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', marginTop: '8px' },
+  button: { width: '100%', padding: '14px', fontSize: '16px', background: 'linear-gradient(135deg, #E30613 0%, #C40010 100%)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', marginTop: '8px' },
   successIcon: { fontSize: '48px', color: '#16a34a' },
 };
 

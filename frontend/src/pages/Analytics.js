@@ -84,16 +84,22 @@ function Analytics({ surveyId, surveyTitle, onBack }) {
   );
 }
 
+
 const styles = {
   container: { minHeight: '100vh', backgroundColor: '#f5f5f5', padding: '24px 16px' },
   inner: { maxWidth: '680px', margin: '0 auto' },
   loading: { textAlign: 'center', padding: '40px', color: '#888' },
-  back: { background: 'none', border: 'none', color: '#4F46E5', cursor: 'pointer', fontSize: '15px', marginBottom: '16px', padding: 0 },
+  back: { background: 'none', border: 'none', color: '#E30613', cursor: 'pointer', fontSize: '15px', marginBottom: '16px', padding: 0 },
   title: { fontSize: '22px', color: '#333', marginBottom: '20px' },
-  statCard: { background: '#4F46E5', borderRadius: '12px', padding: '24px', textAlign: 'center', marginBottom: '20px' },
+  statCard: { background: 'linear-gradient(135deg, #E30613 0%, #C40010 100%)', borderRadius: '12px', padding: '24px', textAlign: 'center', marginBottom: '20px' },
   statNum: { fontSize: '48px', color: 'white', fontWeight: 'bold' },
   statLabel: { fontSize: '16px', color: 'rgba(255,255,255,0.8)' },
-  card: { background: 'white', borderRadius: '10px', padding: '20px', marginBottom: '16px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' },
+  card: {
+  background: 'white',
+  borderRadius: '12px',
+  padding: '20px',
+  boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+  borderLeft: '5px solid #E30613'},
   questionText: { fontSize: '16px', color: '#333', fontWeight: '500', marginBottom: '8px' },
   answersCount: { fontSize: '13px', color: '#888', marginBottom: '12px' },
   average: { fontSize: '15px', color: '#555', marginBottom: '12px' },
@@ -101,7 +107,7 @@ const styles = {
   barRow: { display: 'flex', alignItems: 'center', gap: '10px' },
   barLabel: { width: '80px', fontSize: '13px', color: '#555', flexShrink: 0 },
   barBg: { flex: 1, background: '#f3f4f6', borderRadius: '4px', height: '20px' },
-  barFill: { height: '100%', background: '#4F46E5', borderRadius: '4px', transition: 'width 0.5s' },
+  barFill: { height: '100%', background: '#E30613', borderRadius: '4px', transition: 'width 0.5s' },
   barCount: { width: '30px', fontSize: '13px', color: '#555', textAlign: 'right' },
   textAnswer: { background: '#f9fafb', borderRadius: '8px', padding: '10px 14px', marginBottom: '8px', fontSize: '14px', color: '#444', fontStyle: 'italic' },
   noAnswers: { color: '#aaa', fontSize: '14px' },
